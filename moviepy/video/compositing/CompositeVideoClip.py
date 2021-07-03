@@ -118,6 +118,8 @@ class CompositeVideoClip(VideoClip):
 
             return np.array(im)
 
+        self.make_frame = make_frame
+
     def playing_clips(self, t=0):
         """ Returns a list of the clips in the composite clips that are
             actually playing at the given time `t`. """

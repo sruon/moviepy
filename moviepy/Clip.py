@@ -92,6 +92,7 @@ class Clip:
         else:
             return self.make_frame(t)
 
+
     def fl(self, fun, apply_to=None, keep_duration=True):
         """ General processing of a clip.
 
