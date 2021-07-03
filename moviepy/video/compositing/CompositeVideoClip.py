@@ -102,23 +102,22 @@ class CompositeVideoClip(VideoClip):
             self.mask = CompositeVideoClip(maskclips,self.size, ismask=True,
                                                bg_color=0.0)
 
-        def make_frame(self, t):
-            """The clips playing at time `t` are blitted over one another."""
+    def make_frame(self, t):
+        """The clips playing at time `t` are blitted over one another."""
 
-            frame = self.bg.get_frame(t).astype("uint8")
-            im = Image.fromarray(frame)
+        frame = self.bg.get_frame(t).astype("uint8")
+        im = Image.fromarray(frame)
 
-            if self.bg.mask is not None:
-                frame_mask = self.bg.mask.get_frame(t)
-                im_mask = Image.fromarray(255 * frame_mask).convert("L")
-                im = im.putalpha(im_mask)
+        if self.bg.mask is not None:
+            frame_mask = self.bg.mask.get_frame(t)
+            im_mask = Image.fromarray(255 * frame_mask).convert("L")
+            im = im.putalpha(im_mask)
 
-            for clip in self.playing_clips(t):
-                im = clip.blit_on(im, t)
+        for clip in self.playing_clips(t):
+            im = clip.blit_on(im, t)
 
-            return np.array(im)
+        return np.array(im)
 
-        self.make_frame = make_frame
 
     def playing_clips(self, t=0):
         """ Returns a list of the clips in the composite clips that are
